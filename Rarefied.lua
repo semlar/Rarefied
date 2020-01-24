@@ -64,20 +64,22 @@ f:SetScript('OnEvent', function(_, event, id, onMap)
 		if not ActiveVignettes[vignetteID] then
 			-- new vignette
 			local vignetteInfo = C_VignetteInfo.GetVignetteInfo(vignetteID)
-			ActiveVignettes[vignetteID] = vignetteInfo
-			local name = vignetteInfo.name
-			
-			if vignetteInfo.vignetteID ~= 637 then -- garrison swag?
-				local now = GetTime()
-				if not name then name = id end
-				if recent[name] and now - recent[name] < 300 then recent[name] = now return end -- ignore recently seen
-				local msg = format(MessageString, name or 'Rare', date('%I:%M', time()))
-				RaidWarningFrame_OnEvent(RaidWarningFrame, 'CHAT_MSG_RAID_WARNING', msg)
-				DEFAULT_CHAT_FRAME:AddMessage(msg)
-				recent[name] = now
-				PlaySoundFile([[sound\event sounds\event_wardrum_ogre.ogg]], 'Master')
-				PlaySoundFile([[sound\events\scourge_horn.ogg]], 'Master')
-				fade:Play()
+			if vignetteInfo then
+				ActiveVignettes[vignetteID] = vignetteInfo
+				local name = vignetteInfo.name
+				
+				if vignetteInfo.vignetteID ~= 637 then -- garrison swag?
+					local now = GetTime()
+					if not name then name = id end
+					if recent[name] and now - recent[name] < 300 then recent[name] = now return end -- ignore recently seen
+					local msg = format(MessageString, name or 'Rare', date('%I:%M', time()))
+					RaidWarningFrame_OnEvent(RaidWarningFrame, 'CHAT_MSG_RAID_WARNING', msg)
+					DEFAULT_CHAT_FRAME:AddMessage(msg)
+					recent[name] = now
+					--PlaySoundFile([[sound\event sounds\event_wardrum_ogre.ogg]], 'Master')
+					--PlaySoundFile([[sound\events\scourge_horn.ogg]], 'Master')
+					fade:Play()
+				end
 			end
 		end
 		currentVignettes[vignetteID] = true
