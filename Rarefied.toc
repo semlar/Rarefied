@@ -1,0 +1,6 @@
+## Interface: 80000
+## Title: Rarefied
+## Notes: Detects nearby rares on the minimap
+## Author: Semlar
+## Version: 8.0.0.2
+Rarefied.lua
